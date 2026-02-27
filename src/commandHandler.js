@@ -10,6 +10,8 @@ export function handleCommand(command) {
             showTask(command.slice("5"))
         } else if (command.startsWith("edit ")) {
             updateTask(command.slice("5"))
+        } else if (command.startsWith("delete ")) {
+            deleteTask(command.slice("7"))
         } else {
             throw new Error("Неверная команда!")
         }
@@ -45,6 +47,13 @@ function updateTask(data) {
     taskService.updateTask(+id, updatedData)
 }
 
+function deleteTask(data) {
+    data = parsingString(data)
+    if (data.length != 1) {
+        throw new Error("Неверное количество данных при отображении задачи")
+    }
+    taskService.deleteTask(+data[0])
+}
 
 
 function parsingString(data) {
