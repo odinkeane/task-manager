@@ -12,6 +12,8 @@ export function handleCommand(command) {
             updateTask(command.slice("5"))
         } else if (command.startsWith("delete ")) {
             deleteTask(command.slice("7"))
+        } else if (command.startsWith("stats")) {
+            console.log(taskService.getStatistics())
         } else {
             throw new Error("Неверная команда!")
         }
