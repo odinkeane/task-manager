@@ -1,11 +1,36 @@
+import readline from "readline/promises"
 import { handleCommand } from "./src/commandHandler.js";
 
-handleCommand("add [Задача1] [Описание1] [todo] [2]")
-handleCommand("add [Задача2] [Описание2] [in-progress]")
-handleCommand("show [1]")
-handleCommand("edit [1] [title=New Title] [status=in-progress]")
-handleCommand("show [1]")
-handleCommand("show [2]")
-handleCommand("delete [2]")
-handleCommand("show [2]")
-handleCommand("stats")
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+})
+
+
+async function main() {
+    while (true) {
+        info()
+        const command = await rl.question("> ")
+        console.clear()
+        if (command === "exit") {
+            break;
+        }
+        handleCommand(command)
+    }
+    rl.close()
+}
+
+function info(){
+    console.log(`Список команд: 
+    \radd [Title] [Description] [status] [priority?] - добавить новую задачу. 
+    \rshow [id] - показать задачу по ее id
+    \redit [id] [title=New Title] [status=in-progress] - изменить задачу. 
+    \rdelete [id] - удалить задачу.
+    \rstats - показать статистику.    
+    \rexit - выход
+    `)
+}
+
+
+
+main()
