@@ -8,6 +8,8 @@ export function handleCommand(command) {
             addTask(command.slice(4))
         } else if (command.startsWith("show ")) {
             showTask(command.slice("5"))
+        } else if (command.startsWith("edit ")) {
+            updateTask(command.slice("5"))
         } else {
             throw new Error("Неверная команда!")
         }
@@ -29,11 +31,20 @@ function showTask(data) {
     if (data.length != 1) {
         throw new Error("Неверное количество данных при отображении задачи")
     }
-
     const task = taskService.getTaskById(+data[0])
     if (!task) throw new Error("Такой задачи не существует!")
     console.log(task.toString())
 }
+
+function updateTask(data) {
+    const [id, ...updated] = parsingString(data)
+    const updatedData = updated.reduce((object, update) => {
+        const [key, value] = update.split("=")
+        return { ...object, [key]: value }
+    }, {})
+    taskService.updateTask(+id, updatedData)
+}
+
 
 
 function parsingString(data) {
