@@ -1,3 +1,5 @@
+import Task from "./Task.js"
+
 export default class TaskService {
     constructor() {
         this.tasks = []
